@@ -31,6 +31,9 @@ const crypto = __importStar(require("crypto"));
 const bcrypt = __importStar(require("bcrypt-nodejs"));
 const db_1 = __importDefault(require("../config/db"));
 exports.UserSchema = new db_1.default.Schema({
+    name: {
+        type: String
+    },
     email: {
         type: String,
         unique: true
@@ -43,9 +46,6 @@ exports.UserSchema = new db_1.default.Schema({
     },
     passwordResetExpires: Date,
     tokens: Array,
-    fullname: {
-        type: String
-    },
     picture: {
         type: String
     },
@@ -65,13 +65,13 @@ exports.UserSchema.pre('save', function (_next) {
         if (_err) {
             return _next(_err);
         }
-        bcrypt.hash(user.password, _salt, null, (_err, _hash) => {
-            if (_err) {
-                return _next(_err);
-            }
-            user.password = _hash;
-            return _next();
-        });
+        // bcrypt.hash(user.password, _salt, null, (_err:any, _hash: string) => {
+        // 	if (_err) {
+        // 		return _next(_err);
+        // 	}
+        // 	user.password = _hash;
+        // 	return _next();
+        // });
     });
 });
 // Custom Methods

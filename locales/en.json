@@ -1,3 +1,7 @@
 {
-    "UserNameRequired": "UserName is required!"
+    "UserNameRequired": "UserName is required!",
+
+    "NameRequired": "Name is required!",
+    "roleExits": "This Role Alreday Exits Please Use Other Name of Role",
+    "successRes": "Role hase been created successfully!"
 }

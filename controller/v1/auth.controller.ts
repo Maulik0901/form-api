@@ -10,7 +10,7 @@ class Auth {
 	public static async registerValidation(req: IRequest, res:Response, next: NextFunction): Promise<any> {
         console.log("=========")
 		const schema = Joi.object().keys({
-            username: Joi.string()
+            name: Joi.string()
                 .alphanum()
                 .min(3)
                 .max(30)
@@ -22,14 +22,7 @@ class Auth {
             password: Joi.string()
                 .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
         
-            repeat_password: Joi.ref('password'),
-        
-            access_token: [
-                Joi.string(),
-                Joi.number().required()
-            ],
-        
-            birth_year: Joi.number()
+            roleId: Joi.number()
                 .integer()
                 .min(1900)
                 .max(2013).required(),

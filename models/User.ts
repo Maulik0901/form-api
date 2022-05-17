@@ -15,6 +15,9 @@ export interface IUserModel extends IUser, mongoose.Document {
 
 
 export const UserSchema = new mongoose.Schema<IUserModel>({
+	name: { 
+        type: String 
+    },
 	email: { 
         type: String, 
         unique: true 
@@ -27,9 +30,6 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
     },
 	passwordResetExpires: Date,	
 	tokens: Array,
-	fullname: { 
-        type: String 
-    },	
 	picture: { 
 		type: String 
 	},
