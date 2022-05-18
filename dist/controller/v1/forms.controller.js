@@ -16,7 +16,7 @@ const index_1 = require("../../interfaces/vendors/index");
 const Company_1 = __importDefault(require("../../models/Company"));
 const joi_1 = __importDefault(require("joi"));
 const i18n_1 = __importDefault(require("../../config/i18n"));
-class CompanyController {
+class FormController {
     static get(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             var company = yield Company_1.default.find({ status: 1 });
@@ -135,4 +135,4 @@ class CompanyController {
         });
     }
 }
-exports.default = CompanyController;
+exports.default = FormController;

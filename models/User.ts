@@ -24,17 +24,13 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
     },
 	password: { 
         type: String 
-    },
-	passwordResetToken: { 
-        type: String 
-    },
-	passwordResetExpires: Date,	
-	tokens: Array,
+    },	
 	picture: { 
 		type: String 
 	},
 	roleId: {
-		type: String
+		type: mongoose.Schema.Types.ObjectId,
+        ref: "Role"
 	},
 	createdAt: Number,
     updatedAt: Number,

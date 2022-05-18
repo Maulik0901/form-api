@@ -4,7 +4,7 @@ import Company from '../../models/Company';
 import Joi from "joi";
 import i18n from "../../config/i18n";
 
-class CompanyController {
+class FormController {
    
     public static async get(req: IRequest, res:Response, next: NextFunction): Promise<any>  {
         
@@ -168,4 +168,4 @@ class CompanyController {
     
 }
 
-export default CompanyController;
+export default FormController;

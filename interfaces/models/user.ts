@@ -1,32 +1,13 @@
-export interface Tokens {
-	kind: string;
-	accessToken: string;
-	tokenSecret?: string;
-}
+import { ObjectId } from "mongodb";
 
 export interface IUser {
 	name?: string;
 	email?: string;
-	password?: string;
-	passwordResetToken?: string;
-	passwordResetExpires?: Date;
-
-	facebook?: string;
-	twitter?: string;
-	google?: string;
-	github?: string;
-	instagram?: string;
-	linkedin?: string;
-	tokens?: Tokens[];
-	steam?: string;
-
-	fullname?: string;
+	password?: string;	
 	gender?: string;
-	geolocation?: string;
-	website?: string;
 	picture?: string;
-	roleId?: string;
-
+	roleId?: ObjectId;
+	companyId?: ObjectId;
 	createdAt?: number;
     updatedAt?: number;
 }

@@ -41,16 +41,12 @@ exports.UserSchema = new db_1.default.Schema({
     password: {
         type: String
     },
-    passwordResetToken: {
-        type: String
-    },
-    passwordResetExpires: Date,
-    tokens: Array,
     picture: {
         type: String
     },
     roleId: {
-        type: String
+        type: db_1.default.Schema.Types.ObjectId,
+        ref: "Role"
     },
     createdAt: Number,
     updatedAt: Number,

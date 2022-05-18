@@ -15,14 +15,14 @@
 
     "____Role__End____": "End",
 
-    "____Role__Start____": "Start",
+    "____Company__Start____": "Start",
 
-    "roleExits": "This Role Alreday Exits Please Use Other Name of Role",
-    "roleSuccessRes": "Role hase been created successfully!",
-    "roleUpdateSuccessRes": "Role hase been updated successfully!",
-    "roleSuccessGetRes": "Role List!",
-    "roleNotFound": "Role Not Found!!",
-    "roleDeleteSuccessRes": "Role hase been deleted successfully!",
+    "companyExits": "This Company Alreday Exits Please Use Other Name of Company",
+    "companySuccessRes": "Company hase been created successfully!",
+    "companyUpdateSuccessRes": "Company hase been updated successfully!",
+    "companySuccessGetRes": "Company List!",
+    "companyNotFound": "Company Not Found!!",
+    "companyDeleteSuccessRes": "Company hase been deleted successfully!",
 
-    "____Role__End____": "End"
+    "____Company__End____": "End"
 }
