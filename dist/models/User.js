@@ -51,7 +51,9 @@ exports.UserSchema = new db_1.default.Schema({
     },
     roleId: {
         type: String
-    }
+    },
+    createdAt: Number,
+    updatedAt: Number,
 }, {
     timestamps: true
 });

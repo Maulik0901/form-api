@@ -4,7 +4,7 @@ import Role from '../../models/Role';
 import Joi from "joi";
 import i18n from "../../config/i18n";
 
-class RoleController {
+class CompanyController {
    
     public static async get(req: IRequest, res:Response, next: NextFunction): Promise<any>  {
         
@@ -169,4 +169,4 @@ class RoleController {
     
 }
 
-export default RoleController;
+export default CompanyController;

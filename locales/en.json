@@ -1,7 +1,28 @@
 {
     "UserNameRequired": "UserName is required!",
-
+    "IdRequired": "Id is required!",
     "NameRequired": "Name is required!",
+    
+
+    "____Role__Start____": "Start",
+
     "roleExits": "This Role Alreday Exits Please Use Other Name of Role",
-    "successRes": "Role hase been created successfully!"
+    "roleSuccessRes": "Role hase been created successfully!",
+    "roleUpdateSuccessRes": "Role hase been updated successfully!",
+    "roleSuccessGetRes": "Role List!",
+    "roleNotFound": "Role Not Found!!",
+    "roleDeleteSuccessRes": "Role hase been deleted successfully!",
+
+    "____Role__End____": "End",
+
+    "____Role__Start____": "Start",
+
+    "roleExits": "This Role Alreday Exits Please Use Other Name of Role",
+    "roleSuccessRes": "Role hase been created successfully!",
+    "roleUpdateSuccessRes": "Role hase been updated successfully!",
+    "roleSuccessGetRes": "Role List!",
+    "roleNotFound": "Role Not Found!!",
+    "roleDeleteSuccessRes": "Role hase been deleted successfully!",
+
+    "____Role__End____": "End"
 }

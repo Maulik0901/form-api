@@ -35,8 +35,9 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
 	},
 	roleId: {
 		type: String
-	}
-
+	},
+	createdAt: Number,
+    updatedAt: Number,
 }, {
 	timestamps: true
 });

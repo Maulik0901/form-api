@@ -12,7 +12,9 @@ exports.RoleSchema = new db_1.default.Schema({
     status: {
         type: Number,
         default: 1
-    }
+    },
+    createdAt: Number,
+    updatedAt: Number,
 }, {
     timestamps: true
 });

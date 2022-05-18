@@ -27,6 +27,8 @@ export interface IUser {
 	picture?: string;
 	roleId?: string;
 
+	createdAt?: number;
+    updatedAt?: number;
 }
 
 export default IUser;

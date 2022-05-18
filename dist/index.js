@@ -9,6 +9,7 @@ const db_1 = require("./config/db");
 const i18n_1 = __importDefault(require("./config/i18n"));
 const index_1 = __importDefault(require("./routes/index"));
 const express_2 = __importDefault(require("express"));
+const index_2 = require("./interfaces/vendors/index");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 db_1.Database.init();
@@ -26,7 +27,8 @@ app.use((req, res, next) => {
 });
 app.use('/', index_1.default);
 app.use((err, req, res, next) => {
-    return res.status(err.code).json(err.error);
+    var errRes = new index_2.ErrorRespones(err.code, err.message, err.error);
+    return res.status(errRes.status).json(errRes);
 });
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

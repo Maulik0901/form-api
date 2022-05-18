@@ -8,10 +8,12 @@ export const RoleSchema = new mongoose.Schema<IRole>({
     status: {
         type: Number,
         default: 1
-    }
+    },
+    createdAt: Number,
+    updatedAt: Number,
 
 }, {
-	timestamps: true
+    timestamps: true
 });
 
 const Role = mongoose.model<IRole>('Role', RoleSchema);

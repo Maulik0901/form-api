@@ -16,7 +16,7 @@ const index_1 = require("../../interfaces/vendors/index");
 const Role_1 = __importDefault(require("../../models/Role"));
 const joi_1 = __importDefault(require("joi"));
 const i18n_1 = __importDefault(require("../../config/i18n"));
-class RoleController {
+class CompanyController {
     static get(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             var roleFind = yield Role_1.default.find({ status: 1 });
@@ -136,4 +136,4 @@ class RoleController {
         });
     }
 }
-exports.default = RoleController;
+exports.default = CompanyController;

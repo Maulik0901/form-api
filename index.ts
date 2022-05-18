@@ -4,7 +4,7 @@ import {Database} from "./config/db";
 import i18n from "./config/i18n";
 import RouteApi from "./routes/index";
 import bodyParser from "express";
-
+import { ErrorRespones } from './interfaces/vendors/index';
 dotenv.config();
 
 const app: Express = express();
@@ -28,7 +28,8 @@ app.use((req, res, next) => {
 app.use('/',RouteApi);
 
 app.use((err: any, req: any, res: any, next: any)=> {
-  return res.status(err.code).json(err.error)
+  var errRes = new ErrorRespones(err.code,err.message,err.error);
+  return res.status((errRes as ErrorRespones).status).json(errRes);
 })
 
 app.listen(port, () => {
