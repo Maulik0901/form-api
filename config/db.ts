@@ -6,7 +6,7 @@ export class Database {
 	// Initialize your database pool
 	public static init (): any {
 		var dsn:any = process.env.MONGODB_URI;
-		const options: any  = { useNewUrlParser: true, useUnifiedTopology: true };
+		const options: any  = { useNewUrlParser: true, useUnifiedTopology: true};
 
 		// (<any>mongoose).Promise = bluebird;
 

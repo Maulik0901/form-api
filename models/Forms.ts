@@ -16,10 +16,12 @@ export const FormsSchema = new mongoose.Schema<IForms>({
         type: String 
     },       
     step: { 
-        type: Number
+        type: Number,
+        default: 1
     },
     order: { 
-        type: Number
+        type: Number,
+        default: 1
     },
     companyId: { 
         type: mongoose.Schema.Types.ObjectId,
@@ -32,6 +34,6 @@ export const FormsSchema = new mongoose.Schema<IForms>({
     timestamps: true
 });
 
-const Forms = mongoose.model<IForms>('Forms', FormsSchema);
+const Forms = mongoose.model<IForms>('Forms', FormsSchema,"Forms");
 
 export default Forms;

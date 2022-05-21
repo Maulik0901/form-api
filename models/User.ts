@@ -8,9 +8,9 @@ import { ObjectId } from 'mongodb';
 // Create the model schema & register your custom methods here
 export interface IUserModel extends IUser, mongoose.Document {
 	// billingAddress(): string;
-	comparePassword(password: string, cb: any): string;
+	comparePassword(password: string, cmppassword: string | undefined): Boolean;
 	validPassword(password: string, cb: any): string;
-	gravatar(_size: number): string;
+	// gravatar(_size: number): string;
 }
 
 
@@ -29,8 +29,12 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
 		type: String 
 	},
 	roleId: {
-		type: mongoose.Schema.Types.ObjectId,
+		type: mongoose.Types.ObjectId,
         ref: "Role"
+	},
+	companyId: {
+		type: mongoose.Types.ObjectId,
+        ref: "Company"
 	},
 	createdAt: Number,
     updatedAt: Number,
@@ -51,47 +55,26 @@ UserSchema.pre<IUserModel>('save', function (_next) {
 		if (_err) {
 			return _next(_err);
 		}
-
-		// bcrypt.hash(user.password, _salt, null, (_err:any, _hash: string) => {
-		// 	if (_err) {
-		// 		return _next(_err);
-		// 	}
-
-		// 	user.password = _hash;
-		// 	return _next();
-		// });
+		if(user.password){
+			bcrypt.hash(user.password, _salt, null, (_err:any, _hash: string) => {
+				if (_err) {
+					return _next(_err);
+				}
+	
+				user.password = _hash;
+				return _next();
+			});
+		}
+		
 	});
 });
 
-// Custom Methods
-// Get user's full billing address
-UserSchema.methods.billingAddress = function (): string {
-	const fulladdress = `${this.fullname.trim()} ${this.geolocation.trim()}`;
-	return fulladdress;
-};
 
 // Compares the user's password with the request password
-UserSchema.methods.comparePassword = function (_requestPassword: string, _cb: Function): void {
-	bcrypt.compare(_requestPassword, this.password, (_err: Object, _isMatch: Boolean) => {
-		return _cb(_err, _isMatch);
-	});
+UserSchema.methods.comparePassword = function (_requestPassword: string, hashPassword: string): Boolean {
+	return bcrypt.compareSync(_requestPassword,hashPassword);	
 };
 
-// User's gravatar
-UserSchema.methods.gravatar = function (_size: number): string {
-	if (! _size) {
-		_size = 200;
-	}
-
-	const url = 'https://gravatar.com/avatar';
-	if (! this.email) {
-		return `${url}/?s=${_size}&d=retro`;
-	}
-
-	const md5 = crypto.createHash('md5').update(this.email).digest('hex');
-	return `${url}/${md5}?s=${_size}&d=retro`;
-};
-
-const User = mongoose.model<IUserModel>('User', UserSchema);
+const User = mongoose.model<IUserModel>('User', UserSchema,"User");
 
 export default User;

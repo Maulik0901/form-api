@@ -21,5 +21,5 @@ exports.CompanySchema = new db_1.default.Schema({
 }, {
     timestamps: true
 });
-const Company = db_1.default.model('Company', exports.CompanySchema);
+const Company = db_1.default.model('Company', exports.CompanySchema, "Company");
 exports.default = Company;

@@ -1,9 +1,7 @@
 import {I18n} from "i18n";
 import path from "path";
 
-// const { I18n } = require('i18n');
-// const path = require('path');
-
+//@ts-ignore
 const i18n = new I18n({
   locales: ['en', 'uk'],
   defaultLocale: 'en',

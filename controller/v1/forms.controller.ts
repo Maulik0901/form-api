@@ -1,6 +1,6 @@
 import { NextFunction,Response } from 'express';
 import { IRequest, SuccessRespones,ErrorRespones } from '../../interfaces/vendors/index';
-import Company from '../../models/Company';
+import Forms from '../../models/Forms';
 import Joi from "joi";
 import i18n from "../../config/i18n";
 
@@ -8,17 +8,17 @@ class FormController {
    
     public static async get(req: IRequest, res:Response, next: NextFunction): Promise<any>  {
         
-        var company = await Company.find({status: 1});
+        var form = await Forms.find({status: 1});
         var successRes = new SuccessRespones(
             200,
-            i18n.__('companySuccessGetRes'),
-            company
+            i18n.__('formSuccessGetRes'),
+            form
         )
         return res.status((successRes as SuccessRespones).status).json(successRes);
         
     }
    
-	public static async companyInsertValidation(req: IRequest, res:Response, next: NextFunction): Promise<any> {
+	public static async formInsertValidation(req: IRequest, res:Response, next: NextFunction): Promise<any> {
         
 		const schema = Joi.object().keys({
             name: Joi.string()
@@ -29,7 +29,17 @@ class FormController {
                 .messages({
                     'any.required': i18n.__('NameRequired')
                 }),
-        
+            type: Joi.string()
+                    .required()
+                    .messages({
+                        'any.required': i18n.__('formTypeRequired')
+                    }),
+            field: Joi.string()
+                    .required()
+                    .messages({
+                        'any.required': i18n.__('formFieldRequired')
+                    }),
+                    
         })
        
         try {
@@ -54,31 +64,26 @@ class FormController {
     public static async create(req: IRequest, res:Response, next: NextFunction): Promise<any>  {
         const name = req.body.name.toLowerCase();
             
-        const company = new Company({
-            name: name            
+        const form = new Forms({
+            name: name,
+            // type: req.body.type,
+            field: req.body.field,
+            step: req.body.step,
+            order: req.body.order,//@ts-ignore
+            companyId: req.user.companyId._id
         });
     
-        var companyFind = await Company.findOne({ name: name });
-        
-        if(companyFind) {
-            var errorRes = new ErrorRespones(
-                400,
-                i18n.__('companyNotFound'),
-                i18n.__('companyNotFound')
-            )
-           return res.status((errorRes as ErrorRespones).status).json(errorRes)
-        }
-        var companyInsert = await company.save();
+        var formInsert = await form.save();
         var successRes = new SuccessRespones(
             200,
-            i18n.__('companySuccessRes'),
-            companyInsert
+            i18n.__('formSuccessRes'),
+            formInsert
         )
         return res.status((successRes as SuccessRespones).status).json(successRes);
         
     }
 
-    public static async companyUpdateValidation(req: IRequest, res:Response, next: NextFunction): Promise<any> {
+    public static async formUpdateValidation(req: IRequest, res:Response, next: NextFunction): Promise<any> {
         
 		const schema = Joi.object().keys({
             _id: Joi.string()
@@ -95,7 +100,16 @@ class FormController {
                 .messages({
                     'any.required': i18n.__('NameRequired')
                 }),
-        
+            type: Joi.string()
+                .required()
+                .messages({
+                    'any.required': i18n.__('formTypeRequired')
+                }),
+            field: Joi.string()
+                .required()
+                .messages({
+                    'any.required': i18n.__('formFieldRequired')
+                }),
         })
        
         try {
@@ -118,23 +132,28 @@ class FormController {
         const _id = req.body._id;
         const name = req.body.name.toLowerCase();
     
-        var companyFind = await Company.findOne({ _id: _id });
+        var formFind = await Forms.findOne({ _id: _id });
         
-        if(!companyFind) {
+        if(!formFind) {
             var errorRes = new ErrorRespones(
                 400,
-                i18n.__('companyNotFound'),
-                i18n.__('companyNotFound')
+                i18n.__('formNotFound'),
+                i18n.__('formNotFound')
             )
            return res.status((errorRes as ErrorRespones).status).json(errorRes)
         }
 
-        companyFind.name = name;
-        var companyUpdate = await companyFind.save();
+        formFind.name = req.body.name;
+        formFind.type = req.body.type;
+        formFind.field = req.body.field;
+        formFind.step = req.body.step;
+        formFind.order = req.body.order;
+        
+        var formUpdate = await formFind.save();
         var successRes = new SuccessRespones(
             200,
-            i18n.__('companyUpdateSuccessRes'),
-            companyUpdate
+            i18n.__('formUpdateSuccessRes'),
+            formUpdate
         )
         return res.status((successRes as SuccessRespones).status).json(successRes);
         
@@ -144,23 +163,23 @@ class FormController {
         const _id = req.params.id;
        
         console.log({_id})
-        var companyFind = await Company.findOne({ _id: _id,status: 1 });
+        var formFind = await Forms.findOne({ _id: _id,status: 1 });
         
-        if(!companyFind) {
+        if(!formFind) {
             var errorRes = new ErrorRespones(
                 400,
-                i18n.__('companyNotFound'),
-                i18n.__('companyNotFound')
+                i18n.__('formNotFound'),
+                i18n.__('formNotFound')
             )
            return res.status((errorRes as ErrorRespones).status).json(errorRes)
         }
 
-        companyFind.status = 4;
-        var roleUpdate = await companyFind.save();
+        formFind.status = 4;
+        var formUpdate = await formFind.save();
         var successRes = new SuccessRespones(
             200,
-            i18n.__('companyDeleteSuccessRes'),
-            roleUpdate
+            i18n.__('formDeleteSuccessRes'),
+            formUpdate
         )
         return res.status((successRes as SuccessRespones).status).json(successRes);
         

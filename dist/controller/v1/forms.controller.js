@@ -13,18 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../../interfaces/vendors/index");
-const Company_1 = __importDefault(require("../../models/Company"));
+const Forms_1 = __importDefault(require("../../models/Forms"));
 const joi_1 = __importDefault(require("joi"));
 const i18n_1 = __importDefault(require("../../config/i18n"));
 class FormController {
     static get(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            var company = yield Company_1.default.find({ status: 1 });
-            var successRes = new index_1.SuccessRespones(200, i18n_1.default.__('companySuccessGetRes'), company);
+            var form = yield Forms_1.default.find({ status: 1 });
+            var successRes = new index_1.SuccessRespones(200, i18n_1.default.__('formSuccessGetRes'), form);
             return res.status(successRes.status).json(successRes);
         });
     }
-    static companyInsertValidation(req, res, next) {
+    static formInsertValidation(req, res, next) {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             const schema = joi_1.default.object().keys({
@@ -35,6 +35,16 @@ class FormController {
                     .required()
                     .messages({
                     'any.required': i18n_1.default.__('NameRequired')
+                }),
+                type: joi_1.default.string()
+                    .required()
+                    .messages({
+                    'any.required': i18n_1.default.__('formTypeRequired')
+                }),
+                field: joi_1.default.string()
+                    .required()
+                    .messages({
+                    'any.required': i18n_1.default.__('formFieldRequired')
                 }),
             });
             try {
@@ -57,20 +67,20 @@ class FormController {
     static create(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             const name = req.body.name.toLowerCase();
-            const company = new Company_1.default({
-                name: name
+            const form = new Forms_1.default({
+                name: name,
+                // type: req.body.type,
+                field: req.body.field,
+                step: req.body.step,
+                order: req.body.order,
+                companyId: req.user.companyId._id
             });
-            var companyFind = yield Company_1.default.findOne({ name: name });
-            if (companyFind) {
-                var errorRes = new index_1.ErrorRespones(400, i18n_1.default.__('companyNotFound'), i18n_1.default.__('companyNotFound'));
-                return res.status(errorRes.status).json(errorRes);
-            }
-            var companyInsert = yield company.save();
-            var successRes = new index_1.SuccessRespones(200, i18n_1.default.__('companySuccessRes'), companyInsert);
+            var formInsert = yield form.save();
+            var successRes = new index_1.SuccessRespones(200, i18n_1.default.__('formSuccessRes'), formInsert);
             return res.status(successRes.status).json(successRes);
         });
     }
-    static companyUpdateValidation(req, res, next) {
+    static formUpdateValidation(req, res, next) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const schema = joi_1.default.object().keys({
@@ -87,6 +97,16 @@ class FormController {
                     .required()
                     .messages({
                     'any.required': i18n_1.default.__('NameRequired')
+                }),
+                type: joi_1.default.string()
+                    .required()
+                    .messages({
+                    'any.required': i18n_1.default.__('formTypeRequired')
+                }),
+                field: joi_1.default.string()
+                    .required()
+                    .messages({
+                    'any.required': i18n_1.default.__('formFieldRequired')
                 }),
             });
             try {
@@ -108,14 +128,18 @@ class FormController {
         return __awaiter(this, void 0, void 0, function* () {
             const _id = req.body._id;
             const name = req.body.name.toLowerCase();
-            var companyFind = yield Company_1.default.findOne({ _id: _id });
-            if (!companyFind) {
-                var errorRes = new index_1.ErrorRespones(400, i18n_1.default.__('companyNotFound'), i18n_1.default.__('companyNotFound'));
+            var formFind = yield Forms_1.default.findOne({ _id: _id });
+            if (!formFind) {
+                var errorRes = new index_1.ErrorRespones(400, i18n_1.default.__('formNotFound'), i18n_1.default.__('formNotFound'));
                 return res.status(errorRes.status).json(errorRes);
             }
-            companyFind.name = name;
-            var companyUpdate = yield companyFind.save();
-            var successRes = new index_1.SuccessRespones(200, i18n_1.default.__('companyUpdateSuccessRes'), companyUpdate);
+            formFind.name = req.body.name;
+            formFind.type = req.body.type;
+            formFind.field = req.body.field;
+            formFind.step = req.body.step;
+            formFind.order = req.body.order;
+            var formUpdate = yield formFind.save();
+            var successRes = new index_1.SuccessRespones(200, i18n_1.default.__('formUpdateSuccessRes'), formUpdate);
             return res.status(successRes.status).json(successRes);
         });
     }
@@ -123,14 +147,14 @@ class FormController {
         return __awaiter(this, void 0, void 0, function* () {
             const _id = req.params.id;
             console.log({ _id });
-            var companyFind = yield Company_1.default.findOne({ _id: _id, status: 1 });
-            if (!companyFind) {
-                var errorRes = new index_1.ErrorRespones(400, i18n_1.default.__('companyNotFound'), i18n_1.default.__('companyNotFound'));
+            var formFind = yield Forms_1.default.findOne({ _id: _id, status: 1 });
+            if (!formFind) {
+                var errorRes = new index_1.ErrorRespones(400, i18n_1.default.__('formNotFound'), i18n_1.default.__('formNotFound'));
                 return res.status(errorRes.status).json(errorRes);
             }
-            companyFind.status = 4;
-            var roleUpdate = yield companyFind.save();
-            var successRes = new index_1.SuccessRespones(200, i18n_1.default.__('companyDeleteSuccessRes'), roleUpdate);
+            formFind.status = 4;
+            var formUpdate = yield formFind.save();
+            var successRes = new index_1.SuccessRespones(200, i18n_1.default.__('formDeleteSuccessRes'), formUpdate);
             return res.status(successRes.status).json(successRes);
         });
     }

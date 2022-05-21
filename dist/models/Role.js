@@ -18,5 +18,5 @@ exports.RoleSchema = new db_1.default.Schema({
 }, {
     timestamps: true
 });
-const Role = db_1.default.model('Role', exports.RoleSchema);
+const Role = db_1.default.model('Role', exports.RoleSchema, "Role");
 exports.default = Role;

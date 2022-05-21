@@ -20,10 +20,12 @@ exports.FormsSchema = new db_1.default.Schema({
         type: String
     },
     step: {
-        type: Number
+        type: Number,
+        default: 1
     },
     order: {
-        type: Number
+        type: Number,
+        default: 1
     },
     companyId: {
         type: db_1.default.Schema.Types.ObjectId,
@@ -34,5 +36,5 @@ exports.FormsSchema = new db_1.default.Schema({
 }, {
     timestamps: true
 });
-const Forms = db_1.default.model('Forms', exports.FormsSchema);
+const Forms = db_1.default.model('Forms', exports.FormsSchema, "Forms");
 exports.default = Forms;

@@ -5,8 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const i18n_1 = require("i18n");
 const path_1 = __importDefault(require("path"));
-// const { I18n } = require('i18n');
-// const path = require('path');
+//@ts-ignore
 const i18n = new i18n_1.I18n({
     locales: ['en', 'uk'],
     defaultLocale: 'en',

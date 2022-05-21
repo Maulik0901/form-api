@@ -10,6 +10,7 @@ export interface IUser {
 	companyId?: ObjectId;
 	createdAt?: number;
     updatedAt?: number;
+	token?: string;
 }
 
 export default IUser;

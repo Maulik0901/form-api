@@ -2,8 +2,12 @@
     "UserNameRequired": "UserName is required!",
     "IdRequired": "Id is required!",
     "NameRequired": "Name is required!",
-    
+    "UserExits": "This User exites our System Please try to other email",
+    "UserSuccessRes": "User hase been created successfully!",
+    "UserNotFound": "User not found please signup!",
+    "UserPasswordWrong": "Email Or Passeord Wrong!",
 
+    "TokenRequired": "Token is required!",
     "____Role__Start____": "Start",
 
     "roleExits": "This Role Alreday Exits Please Use Other Name of Role",
@@ -24,5 +28,18 @@
     "companyNotFound": "Company Not Found!!",
     "companyDeleteSuccessRes": "Company hase been deleted successfully!",
 
-    "____Company__End____": "End"
+    "____Company__End____": "End",
+
+    "____Form__Start____": "Start",
+
+    "formExits": "This Form Alreday Exits Please Use Other Name of Form",
+    "formTypeRequired": "Form Type is required!",
+    "formFieldRequired": "Form Field is required!",
+    "formSuccessRes": "Form hase been created successfully!",
+    "formUpdateSuccessRes": "Form hase been updated successfully!",
+    "formSuccessGetRes": "Form List!",
+    "formNotFound": "Form Not Found!!",
+    "formDeleteSuccessRes": "Form hase been deleted successfully!",
+
+    "____Form__End____": "End"
 }

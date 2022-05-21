@@ -27,7 +27,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserSchema = void 0;
-const crypto = __importStar(require("crypto"));
 const bcrypt = __importStar(require("bcrypt-nodejs"));
 const db_1 = __importDefault(require("../config/db"));
 exports.UserSchema = new db_1.default.Schema({
@@ -45,8 +44,12 @@ exports.UserSchema = new db_1.default.Schema({
         type: String
     },
     roleId: {
-        type: db_1.default.Schema.Types.ObjectId,
+        type: db_1.default.Types.ObjectId,
         ref: "Role"
+    },
+    companyId: {
+        type: db_1.default.Types.ObjectId,
+        ref: "Company"
     },
     createdAt: Number,
     updatedAt: Number,
@@ -63,38 +66,20 @@ exports.UserSchema.pre('save', function (_next) {
         if (_err) {
             return _next(_err);
         }
-        // bcrypt.hash(user.password, _salt, null, (_err:any, _hash: string) => {
-        // 	if (_err) {
-        // 		return _next(_err);
-        // 	}
-        // 	user.password = _hash;
-        // 	return _next();
-        // });
+        if (user.password) {
+            bcrypt.hash(user.password, _salt, null, (_err, _hash) => {
+                if (_err) {
+                    return _next(_err);
+                }
+                user.password = _hash;
+                return _next();
+            });
+        }
     });
 });
-// Custom Methods
-// Get user's full billing address
-exports.UserSchema.methods.billingAddress = function () {
-    const fulladdress = `${this.fullname.trim()} ${this.geolocation.trim()}`;
-    return fulladdress;
-};
 // Compares the user's password with the request password
-exports.UserSchema.methods.comparePassword = function (_requestPassword, _cb) {
-    bcrypt.compare(_requestPassword, this.password, (_err, _isMatch) => {
-        return _cb(_err, _isMatch);
-    });
+exports.UserSchema.methods.comparePassword = function (_requestPassword, hashPassword) {
+    return bcrypt.compareSync(_requestPassword, hashPassword);
 };
-// User's gravatar
-exports.UserSchema.methods.gravatar = function (_size) {
-    if (!_size) {
-        _size = 200;
-    }
-    const url = 'https://gravatar.com/avatar';
-    if (!this.email) {
-        return `${url}/?s=${_size}&d=retro`;
-    }
-    const md5 = crypto.createHash('md5').update(this.email).digest('hex');
-    return `${url}/${md5}?s=${_size}&d=retro`;
-};
-const User = db_1.default.model('User', exports.UserSchema);
+const User = db_1.default.model('User', exports.UserSchema, "User");
 exports.default = User;
